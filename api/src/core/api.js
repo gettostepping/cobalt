@@ -79,7 +79,7 @@ export const runAPI = async (express, app, __dirname, isPrimary = true) => {
 
     const sessionLimiter = rateLimit({
         windowMs: env.sessionRateLimitWindow * 1000,
-        limit: env.sessionRateLimit,
+        limit: 999999,
         standardHeaders: 'draft-6',
         legacyHeaders: false,
         keyGenerator,
@@ -89,7 +89,7 @@ export const runAPI = async (express, app, __dirname, isPrimary = true) => {
 
     const apiLimiter = rateLimit({
         windowMs: env.rateLimitWindow * 1000,
-        limit: (req) => req.rateLimitMax || env.rateLimitMax,
+        limit: (req) => req.rateLimitMax || 999999,
         standardHeaders: 'draft-6',
         legacyHeaders: false,
         keyGenerator: req => req.rateLimitKey || keyGenerator(req),
@@ -99,7 +99,7 @@ export const runAPI = async (express, app, __dirname, isPrimary = true) => {
 
     const apiTunnelLimiter = rateLimit({
         windowMs: env.tunnelRateLimitWindow * 1000,
-        limit: env.tunnelRateLimitMax,
+        limit: 999999,
         standardHeaders: 'draft-6',
         legacyHeaders: false,
         keyGenerator: req => keyGenerator(req),
