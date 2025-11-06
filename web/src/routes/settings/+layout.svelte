@@ -23,7 +23,7 @@
     import IconBug from "@tabler/icons-svelte/IconBug.svelte";
     import IconAdjustmentsStar from "@tabler/icons-svelte/IconAdjustmentsStar.svelte";
 
-    $: versionText = $version
+    $: versionText = $version && $version.version && $version.commit
         ? `v${$version.version}-${$version.commit.slice(0, 8)}`
         : "\xa0";
 </script>

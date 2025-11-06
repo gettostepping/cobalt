@@ -3,10 +3,10 @@ import type { Optional } from "./types/generic";
 import { browser } from "$app/environment";
 
 type VersionResponse = {
-    commit: string;
-    branch: string;
-    remote: string;
-    version: string;
+    commit?: string;
+    branch?: string;
+    remote?: string;
+    version?: string;
 }
 
 export const version = readable<Optional<VersionResponse>>(
