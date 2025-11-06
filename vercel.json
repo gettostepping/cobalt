@@ -2,7 +2,6 @@
   "buildCommand": "pnpm run build",
   "outputDirectory": "build",
   "framework": null,
-  "installCommand": "pnpm install",
-  "rootDirectory": "web"
+  "installCommand": "pnpm install"
 }
 
