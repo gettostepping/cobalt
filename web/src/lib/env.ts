@@ -23,6 +23,17 @@ const variables = {
     ENABLE_DEPRECATED_YOUTUBE_HLS: getEnvBool('ENABLE_DEPRECATED_YOUTUBE_HLS'),
 }
 
+// Debug logging (only in browser)
+if (typeof window !== 'undefined') {
+    console.log('🔧 Environment variables loaded:');
+    console.log('  - WEB_DEFAULT_API:', variables.DEFAULT_API || '❌ NOT SET');
+    console.log('  - WEB_HOST:', variables.HOST || 'not set');
+    if (!variables.DEFAULT_API) {
+        console.warn('⚠️  WEB_DEFAULT_API is missing! The app will not be able to connect to the Cobalt API.');
+        console.warn('   Set it in Vercel: Project Settings → Environment Variables');
+    }
+}
+
 const contacts = {
     discord: "https://discord.gg/pQPt8HBUPu",
     twitter: "https://x.com/justusecobalt",

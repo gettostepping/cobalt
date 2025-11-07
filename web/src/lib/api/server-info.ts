@@ -12,14 +12,31 @@ export type CobaltServerInfoCache = {
 }
 
 const request = async () => {
-    const apiEndpoint = `${currentApiURL()}/`;
+    const apiURL = currentApiURL();
+    
+    if (!apiURL) {
+        console.error('❌ Cannot fetch server info: API URL is not configured');
+        return null;
+    }
+    
+    const apiEndpoint = `${apiURL}/`;
+    console.log('🔍 Fetching server info from:', apiEndpoint);
 
     const response: CobaltServerInfoResponse = await fetch(apiEndpoint, {
         redirect: "manual",
         signal: AbortSignal.timeout(10000),
     })
-    .then(r => r.json())
+    .then(async (r) => {
+        console.log('📡 Server info response status:', r.status);
+        if (!r.ok && r.status !== 200) {
+            console.error('❌ Server info request failed:', r.status, r.statusText);
+            const text = await r.text().catch(() => '');
+            console.error('Response body:', text);
+        }
+        return r.json();
+    })
     .catch((e) => {
+        console.error('❌ Error fetching server info:', e);
         if (e?.message?.includes("timed out")) {
             return {
                 status: "error",
@@ -28,6 +45,8 @@ const request = async () => {
                 }
             } as CobaltErrorResponse
         }
+        // Return null to indicate failure
+        return null;
     });
 
     return response;
